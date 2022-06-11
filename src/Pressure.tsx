@@ -14,9 +14,9 @@ type LocationProp = {
 type LocalStorageSpace = 'weather' | 'date' | 'location';
 
 const Pressure = () => {
-  const [pressure, setPressure] = useState<number>();
-  const [latitude, setLatitude] = useState<number>();
-  const [longitude, setLongitude] = useState<number>();
+  const [pressure, setPressure] = useState<number>(0);
+  const [latitude, setLatitude] = useState<number>(0);
+  const [longitude, setLongitude] = useState<number>(0);
 
   const today = new Date();
   const thisYear = today.getFullYear();
@@ -32,31 +32,33 @@ const Pressure = () => {
   }, []);
 
   useEffect(() => {
-    if (loadLocalStorage('date')) {
-      const localYMD = loadLocalStorage('date');
-      if (thisYMD === localYMD) {
-        //로컬 데이터 그대로 삽입
-        const weatherStorage = loadLocalStorage('weather');
-        setPressure(weatherStorage.pressure);
-        console.log('기존 데이터가 있습니다.');
+    if (latitude && longitude) {
+      if (loadLocalStorage('date')) {
+        const localYMD = loadLocalStorage('date');
+        if (thisYMD === localYMD) {
+          //로컬 데이터 그대로 삽입
+          const weatherStorage = loadLocalStorage('weather');
+          setPressure(weatherStorage.pressure);
+          console.log('기존 데이터가 있습니다.');
+        } else {
+          //시간 업데이트
+          saveDate();
+          //장소 업데이트
+          saveLocation();
+          //날씨 정보 추가
+          saveWeather(latitude, longitude);
+          console.log('날씨 정보가 업데이트되었습니다.');
+        }
       } else {
-        //시간 업데이트
+        //로컬 데이터가 없을 때
+        //시간 추가
         saveDate();
-        //장소 업데이트
+        //장소 추가
         saveLocation();
-        //날씨 정보 추가
+        //날씨 추가
         saveWeather(latitude, longitude);
-        console.log('날씨 정보가 업데이트되었습니다.');
+        console.log('날씨 정보가 새로 추가되었습니다.');
       }
-    } else {
-      //로컬 데이터가 없을 때
-      //시간 추가
-      saveDate();
-      //장소 추가
-      saveLocation();
-      //날씨 추가
-      saveWeather(latitude, longitude);
-      console.log('날씨 정보가 새로 추가되었습니다.');
     }
   }, [latitude, longitude]);
 
