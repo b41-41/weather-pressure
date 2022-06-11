@@ -19,9 +19,9 @@ const Pressure = () => {
   const [longitude, setLongitude] = useState<number>();
 
   const today = new Date();
-  const thisYear = today.getFullYear;
-  const thisMonth = today.getMonth;
-  const thisDate = today.getDate;
+  const thisYear = today.getFullYear();
+  const thisMonth = today.getMonth();
+  const thisDate = today.getDate();
   const thisYMD = `${thisYear}${thisMonth}${thisDate}`;
 
   useEffect(() => {
