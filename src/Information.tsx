@@ -1,4 +1,3 @@
-import { relative } from 'path';
 import React, { ReactElement } from 'react';
 
 type Props = { pressure?: number };
