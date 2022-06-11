@@ -41,7 +41,7 @@ const Information = (props: Props) => {
         backgroundColor: selectColor(),
         color: 'white',
         fontWeight: 'bolder',
-        fontSize: '6rem',
+        fontSize: '4rem',
         textAlign: 'center',
       }}
     >
