@@ -1,8 +1,10 @@
-import React from 'react';
+import Pressure from './Pressure';
 
 function App() {
+
   return (
     <div className="App">
+      <Pressure />
     </div>
   );
 }
