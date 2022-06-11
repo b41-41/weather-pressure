@@ -84,10 +84,18 @@ const Pressure = () => {
   };
 
   const saveLocation = (): void => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-      saveLocalStorage('location', { latitude, longitude });
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        saveLocalStorage('location', { latitude, longitude });
+      },
+      () => {
+        saveLocalStorage('location', {
+          latitude: 37.5666805,
+          longitude: 126.9784147,
+        });
+      }
+    );
   };
 
   const saveDate = (): void => {
