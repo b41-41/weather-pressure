@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Information from './Information';
 
 type WeatherProp = {
   pressure: number;
@@ -113,7 +114,7 @@ const Pressure = () => {
     return;
   };
 
-  return <div className="App">{pressure}</div>;
+  return <Information pressure={pressure} />;
 };
 
 export default Pressure;
