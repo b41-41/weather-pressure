@@ -1,3 +1,4 @@
+import { relative } from 'path';
 import React, { ReactElement } from 'react';
 
 type Props = { pressure?: number };
@@ -5,6 +6,19 @@ type Props = { pressure?: number };
 const Information = (props: Props) => {
   const { pressure } = props;
   const STANDARD_PRESSURE = 1013;
+
+  const selectColor = (): string => {
+    if (!pressure) {
+      return 'red';
+    } else if (pressure > STANDARD_PRESSURE) {
+      return 'green';
+    } else if (pressure === STANDARD_PRESSURE) {
+      return 'green';
+    } else if (pressure < STANDARD_PRESSURE) {
+      return 'red';
+    }
+    return 'red';
+  };
 
   const printPage = (): ReactElement => {
     if (!pressure) {
@@ -19,7 +33,31 @@ const Information = (props: Props) => {
     return <></>;
   };
 
-  return <div>{printPage()}</div>;
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: selectColor(),
+        color: 'white',
+        fontWeight: 'bolder',
+        fontSize: '6rem',
+        textAlign: 'center',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      >
+        {printPage()}
+      </div>
+    </div>
+  );
 };
 
 export default Information;
