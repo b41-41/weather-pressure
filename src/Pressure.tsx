@@ -25,10 +25,16 @@ const Pressure = () => {
   const thisYMD = `${thisYear}${thisMonth}${thisDate}`;
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLatitude(position.coords.latitude);
-      setLongitude(position.coords.longitude);
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      () => {
+        setLatitude(37.5666805);
+        setLongitude(126.9784147);
+      }
+    );
   }, []);
 
   useEffect(() => {
