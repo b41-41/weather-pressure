@@ -22,7 +22,8 @@ const Pressure = () => {
   const thisYear = today.getFullYear();
   const thisMonth = today.getMonth();
   const thisDate = today.getDate();
-  const thisYMD = `${thisYear}${thisMonth}${thisDate}`;
+  const thisHours = today.getHours();
+  const thisYMDH = `${thisYear}${thisMonth}${thisDate}${thisHours}`;
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -40,8 +41,8 @@ const Pressure = () => {
   useEffect(() => {
     if (latitude && longitude) {
       if (loadLocalStorage('date')) {
-        const localYMD = loadLocalStorage('date');
-        if (thisYMD === localYMD) {
+        const localYMDH = loadLocalStorage('date');
+        if (thisYMDH === localYMDH) {
           //로컬 데이터 그대로 삽입
           const weatherStorage = loadLocalStorage('weather');
           setPressure(weatherStorage.pressure);
@@ -105,7 +106,7 @@ const Pressure = () => {
   };
 
   const saveDate = (): void => {
-    saveLocalStorage('date', thisYMD);
+    saveLocalStorage('date', thisYMDH);
   };
 
   const saveLocalStorage = (
