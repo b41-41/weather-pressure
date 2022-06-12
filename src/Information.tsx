@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 type Props = { pressure?: number };
 
@@ -6,18 +7,21 @@ const Information = (props: Props) => {
   const { pressure } = props;
   const STANDARD_PRESSURE = 1013;
 
-  const selectColor = (): string => {
+  const [color, setColor] = useState<string>('red');
+
+  const selectColor = (): void => {
     if (!pressure) {
-      return 'red';
+      setColor('red');
     } else if (pressure > STANDARD_PRESSURE) {
-      return 'green';
+      setColor('green');
     } else if (pressure === STANDARD_PRESSURE) {
-      return 'green';
+      setColor('green');
     } else if (pressure < STANDARD_PRESSURE) {
-      return 'red';
+      setColor('red');
     }
-    return 'red';
   };
+
+  useEffect(selectColor, []);
 
   const printPage = (): ReactElement => {
     if (!pressure) {
@@ -33,29 +37,34 @@ const Information = (props: Props) => {
   };
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: selectColor(),
-        color: 'white',
-        fontWeight: 'bolder',
-        fontSize: '4rem',
-        textAlign: 'center',
-      }}
-    >
+    <>
+      <Helmet>
+        <meta name="theme-color" content={color} />
+      </Helmet>
       <div
         style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          position: 'relative',
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: color,
+          color: 'white',
+          fontWeight: 'bolder',
+          fontSize: '4rem',
+          textAlign: 'center',
         }}
       >
-        {printPage()}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          {printPage()}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
